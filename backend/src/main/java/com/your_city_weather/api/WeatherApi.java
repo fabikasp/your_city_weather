@@ -1,4 +1,4 @@
-package com.your_city_weather.model;
+package com.your_city_weather.api;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

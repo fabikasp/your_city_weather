@@ -1,125 +1,112 @@
 package com.your_city_weather.model;
 
-import java.util.LinkedHashMap;
-
 public class CurrentWeather {
 
-    private LinkedHashMap<String, Double> coord;
+    private final String weatherName;
 
-    private LinkedHashMap<String, String>[] weather;
+    private final String weatherDescription;
 
-    private String base;
+    private final String weatherIconCode;
 
-    private LinkedHashMap<String, Double> main;
+    private final Double temperature;
 
-    private Integer visibility;
+    private final Double minTemperature;
 
-    private LinkedHashMap<String, Double> wind;
+    private final Double maxTemperature;
 
-    private LinkedHashMap<String, Double> rain;
+    private final Double pressure;
 
-    private LinkedHashMap<String, Integer> clouds;
+    private final Double humidity;
 
-    private Integer dt;
+    private final Integer visibilityRange;
 
-    private LinkedHashMap<String, Object> sys;
+    private final Double windSpeed;
 
-    private Integer timezone;
+    private final Double rainVolume1Hour;
 
-    private Integer id;
+    private final Double rainVolume3Hours;
 
-    private String name;
-
-    private Integer cod;
-
+    private final Double cloudiness;
 
     public CurrentWeather(
-        LinkedHashMap<String, Double> coord,
-        LinkedHashMap<String, String>[] weather,
-        String base,
-        LinkedHashMap<String, Double> main,
-        Integer visibility, LinkedHashMap<String, Double> wind,
-        LinkedHashMap<String, Double> rain,
-        LinkedHashMap<String, Integer> clouds,
-        Integer dt,
-        LinkedHashMap<String, Object> sys,
-        Integer timezone,
-        Integer id,
-        String name,
-        Integer cod
+        String weatherName,
+        String weatherDescription,
+        String weatherIconCode,
+        Double temperature,
+        Double minTemperature,
+        Double maxTemperature,
+        Double pressure,
+        Double humidity,
+        Integer visibilityRange,
+        Double windSpeed,
+        Double rainVolume1Hour,
+        Double rainVolume3Hours,
+        Double cloudiness
     ) {
-        this.coord = coord;
-        this.weather = weather;
-        this.base = base;
-        this.main = main;
-        this.visibility = visibility;
-        this.wind = wind;
-        this.rain = rain;
-        this.clouds = clouds;
-        this.dt = dt;
-        this.sys = sys;
-        this.timezone = timezone;
-        this.id = id;
-        this.name = name;
-        this.cod = cod;
+        this.weatherName = weatherName;
+        this.weatherDescription = weatherDescription;
+        this.weatherIconCode = weatherIconCode;
+        this.temperature = temperature;
+        this.minTemperature = minTemperature;
+        this.maxTemperature = maxTemperature;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.visibilityRange = visibilityRange;
+        this.windSpeed = windSpeed;
+        this.rainVolume1Hour = rainVolume1Hour;
+        this.rainVolume3Hours = rainVolume3Hours;
+        this.cloudiness = cloudiness;
     }
 
-    public CurrentWeather() {
+    public String getWeatherName() {
+        return weatherName;
     }
 
-    public LinkedHashMap<String, Double> getCoord() {
-        return coord;
+    public String getWeatherDescription() {
+        return weatherDescription;
     }
 
-    public LinkedHashMap<String, String>[] getWeather() {
-        return weather;
+    public String getWeatherIconCode() {
+        return weatherIconCode;
     }
 
-    public String getBase() {
-        return base;
+    public Double getTemperature() {
+        return temperature;
     }
 
-    public LinkedHashMap<String, Double> getMain() {
-        return main;
+    public Double getMinTemperature() {
+        return minTemperature;
     }
 
-    public Integer getVisibility() {
-        return visibility;
+    public Double getMaxTemperature() {
+        return maxTemperature;
     }
 
-    public LinkedHashMap<String, Double> getWind() {
-        return wind;
+    public Double getPressure() {
+        return pressure;
     }
 
-    public LinkedHashMap<String, Double> getRain() {
-        return rain;
+    public Double getHumidity() {
+        return humidity;
     }
 
-    public LinkedHashMap<String, Integer> getClouds() {
-        return clouds;
+    public Integer getVisibilityRange() {
+        return visibilityRange;
     }
 
-    public Integer getDt() {
-        return dt;
+    public Double getWindSpeed() {
+        return windSpeed;
     }
 
-    public LinkedHashMap<String, Object> getSys() {
-        return sys;
+    public Double getRainVolume1Hour() {
+        return rainVolume1Hour;
     }
 
-    public Integer getTimezone() {
-        return timezone;
+    public Double getRainVolume3Hours() {
+        return rainVolume3Hours;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getCod() {
-        return cod;
+    public Double getCloudiness() {
+        return cloudiness;
     }
 }
