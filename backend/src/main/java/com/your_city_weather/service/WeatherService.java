@@ -16,9 +16,9 @@ public class WeatherService {
     @Autowired
     private WeatherApi weatherApi;
 
-    public CurrentWeather getCurrentWeatherByCoordinates(Double latitude, Double longitude) {
+    public CurrentWeather getCurrentWeatherByCityName(String city) {
         ResponseEntity<CurrentWeather> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildCurrentWeatherUrl(latitude, longitude),
+            weatherApi.buildCurrentWeatherUrl(city),
             CurrentWeather.class
         );
 

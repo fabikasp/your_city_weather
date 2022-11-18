@@ -14,6 +14,6 @@ public class Controller {
 
     @GetMapping("/current-weather")
     public CurrentWeather currentWeather() {
-        return weatherService.getCurrentWeatherByCoordinates(1.0, 1.0);
+        return weatherService.getCurrentWeatherByCityName("Leipzig");
     }
 }

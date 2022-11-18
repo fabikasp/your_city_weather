@@ -7,11 +7,16 @@ import org.springframework.stereotype.Component;
 public class WeatherApi {
 
     private final String currentWeatherBaseUrl = "https://api.openweathermap.org/data/2.5/weather";
+    private final String weatherForecastFor5DaysBaseUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
     @Value("${your_city_weather.openweather-apikey}")
     private String apiKey;
 
-    public String buildCurrentWeatherUrl(Double latitude, Double longitude) {
-        return currentWeatherBaseUrl + "?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    public String buildCurrentWeatherUrl(String city) {
+        return currentWeatherBaseUrl + "?q=" + city + "&appid=" + apiKey;
+    }
+
+    public String buildWeatherForecastFor5DaysUrl(String city) {
+        return weatherForecastFor5DaysBaseUrl + "?q=" + city + "&appid=" + apiKey;
     }
 }
