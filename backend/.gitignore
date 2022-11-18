@@ -34,3 +34,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Private data ###
+src/main/resources/private.properties
