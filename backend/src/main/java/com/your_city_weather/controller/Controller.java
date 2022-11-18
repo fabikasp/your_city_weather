@@ -1,5 +1,6 @@
 package com.your_city_weather.controller;
 
+import com.your_city_weather.api.FiveDayWeatherForecastResponse;
 import com.your_city_weather.model.CurrentWeather;
 import com.your_city_weather.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,10 @@ public class Controller {
     @GetMapping("/current-weather/{city}")
     public CurrentWeather currentWeather(@PathVariable String city) {
         return weatherService.getCurrentWeatherByCityName(city);
+    }
+
+    @GetMapping("/five-day-weather-forecast/{city}")
+    public FiveDayWeatherForecastResponse fiveDayWeatherForecast(@PathVariable String city) {
+        return weatherService.getFiveDayWeatherForecastByCityName(city);
     }
 }

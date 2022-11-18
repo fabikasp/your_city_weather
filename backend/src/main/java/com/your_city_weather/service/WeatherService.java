@@ -2,6 +2,7 @@ package com.your_city_weather.service;
 
 import com.your_city_weather.api.WeatherApi;
 import com.your_city_weather.api.CurrentWeatherResponse;
+import com.your_city_weather.api.FiveDayWeatherForecastResponse;
 import com.your_city_weather.model.CurrentWeather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,15 @@ public class WeatherService {
             rainData != null ? rainData.getOrDefault("3h", null) : null,
             currentWeatherResponse.getClouds().get("all")
         );
+    }
+
+    public FiveDayWeatherForecastResponse getFiveDayWeatherForecastByCityName(String city) {
+        ResponseEntity<FiveDayWeatherForecastResponse> responseEntity = restTemplate.getForEntity(
+            weatherApi.buildFiveDayWeatherForecastUrl(city),
+            FiveDayWeatherForecastResponse.class
+        );
+        FiveDayWeatherForecastResponse fiveDayWeatherForecastResponse = responseEntity.getBody();
+
+        return fiveDayWeatherForecastResponse;
     }
 }
