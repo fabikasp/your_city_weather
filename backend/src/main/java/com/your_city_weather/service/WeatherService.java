@@ -2,16 +2,14 @@ package com.your_city_weather.service;
 
 import com.your_city_weather.api.WeatherApi;
 import com.your_city_weather.api.WeatherForecastResponse;
-import com.your_city_weather.api.WeatherResponse;
-import com.your_city_weather.model.Weather;
+import com.your_city_weather.api.WeatherReportResponse;
+import com.your_city_weather.model.WeatherReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.stream.Stream;
 
 @Service
 public class WeatherService {
@@ -22,52 +20,52 @@ public class WeatherService {
     @Autowired
     private WeatherApi weatherApi;
 
-    public Weather getCurrentWeatherForCity(String countryCode, String city) {
-        ResponseEntity<WeatherResponse> responseEntity = restTemplate.getForEntity(
+    public WeatherReport getCurrentWeatherForCity(String countryCode, String city) {
+        ResponseEntity<WeatherReportResponse> responseEntity = restTemplate.getForEntity(
             weatherApi.buildCurrentWeatherUrl(countryCode, city),
-            WeatherResponse.class
+            WeatherReportResponse.class
         );
 
-        return mapWeatherResponse(responseEntity.getBody());
+        return mapWeatherReportResponse(responseEntity.getBody());
     }
 
-    public Weather[] getWeatherForecastForCity(Integer numberOfDay, String countryCode, String city) {
+    public WeatherReport[] getWeatherForecastForCity(Integer numberOfDay, String countryCode, String city) {
         ResponseEntity<WeatherForecastResponse> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildFiveDayWeatherForecastUrl(countryCode, city),
+            weatherApi.buildWeatherForecastUrl(countryCode, city),
             WeatherForecastResponse.class
         );
-        WeatherResponse[] weatherResponses = responseEntity.getBody().getList();
-        Weather[] weatherArray = new Weather[weatherResponses.length];
-        for (int i = 0; i < weatherResponses.length; i++) {
-            weatherArray[i] = mapWeatherResponse(weatherResponses[i]);
+        WeatherReportResponse[] weatherReportResponses = responseEntity.getBody().getList();
+        WeatherReport[] weatherReportArray = new WeatherReport[weatherReportResponses.length];
+        for (int i = 0; i < weatherReportResponses.length; i++) {
+            weatherReportArray[i] = mapWeatherReportResponse(weatherReportResponses[i]);
         }
 
-        return weatherArray;
+        return weatherReportArray;
     }
 
-    private Weather mapWeatherResponse(WeatherResponse weatherResponse) {
+    private WeatherReport mapWeatherReportResponse(WeatherReportResponse weatherReportResponse) {
         LinkedHashMap<String, String> weatherData = null;
         try {
-            weatherData = weatherResponse.getWeather()[0];
+            weatherData = weatherReportResponse.getWeather()[0];
         } catch (NullPointerException ignore) {
         }
-        LinkedHashMap<String, Double> rainData = weatherResponse.getRain();
+        LinkedHashMap<String, Double> rainData = weatherReportResponse.getRain();
 
-        return new Weather(
+        return new WeatherReport(
             weatherData != null ? weatherData.get("main") : null,
             weatherData != null ? weatherData.get("description") : null,
             weatherData != null ? weatherData.get("icon") : null,
-            weatherResponse.getMain().get("temp"),
-            weatherResponse.getMain().get("temp_min"),
-            weatherResponse.getMain().get("temp_max"),
-            weatherResponse.getMain().get("pressure"),
-            weatherResponse.getMain().get("humidity"),
-            weatherResponse.getVisibility(),
-            weatherResponse.getWind().get("speed"),
+            weatherReportResponse.getMain().get("temp"),
+            weatherReportResponse.getMain().get("temp_min"),
+            weatherReportResponse.getMain().get("temp_max"),
+            weatherReportResponse.getMain().get("pressure"),
+            weatherReportResponse.getMain().get("humidity"),
+            weatherReportResponse.getVisibility(),
+            weatherReportResponse.getWind().get("speed"),
             rainData != null ? rainData.getOrDefault("1h", null) : null,
             rainData != null ? rainData.getOrDefault("3h", null) : null,
-            weatherResponse.getClouds().get("all"),
-            weatherResponse.getDt()
+            weatherReportResponse.getClouds().get("all"),
+            weatherReportResponse.getDt()
         );
     }
 }

@@ -2,7 +2,7 @@ package com.your_city_weather.api;
 
 import java.util.LinkedHashMap;
 
-public class WeatherResponse {
+public class WeatherReportResponse {
 
     private LinkedHashMap<String, String>[] weather;
 
@@ -18,7 +18,7 @@ public class WeatherResponse {
 
     private Integer dt;
 
-    public WeatherResponse(
+    public WeatherReportResponse(
         LinkedHashMap<String, String>[] weather,
         LinkedHashMap<String, Double> main,
         Integer visibility, LinkedHashMap<String, Double> wind,
@@ -35,7 +35,7 @@ public class WeatherResponse {
         this.dt = dt;
     }
 
-    public WeatherResponse() {
+    public WeatherReportResponse() {
     }
 
     public LinkedHashMap<String, String>[] getWeather() {

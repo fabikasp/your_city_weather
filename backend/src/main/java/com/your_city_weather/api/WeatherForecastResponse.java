@@ -2,16 +2,16 @@ package com.your_city_weather.api;
 
 public class WeatherForecastResponse {
 
-    private WeatherResponse[] list;
+    private WeatherReportResponse[] list;
 
-    public WeatherForecastResponse(WeatherResponse[] list) {
+    public WeatherForecastResponse(WeatherReportResponse[] list) {
         this.list = list;
     }
 
     public WeatherForecastResponse() {
     }
 
-    public WeatherResponse[] getList() {
+    public WeatherReportResponse[] getList() {
         return list;
     }
 }
