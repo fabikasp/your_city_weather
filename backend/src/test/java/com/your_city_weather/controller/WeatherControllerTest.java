@@ -76,7 +76,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void currentWeatherNotFound() throws Exception {
+    void testCurrentWeatherNotFound() throws Exception {
         Mockito.when(weatherService.getCurrentWeatherForCity("DE", "NichtExistierendeStadt"))
             .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
         mvc.perform(get("/current-weather/DE/NichtExistierendeStadt")
@@ -85,7 +85,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void currentWeatherInternalServerError() throws Exception {
+    void testCurrentWeatherInternalServerError() throws Exception {
         Mockito.when(weatherService.getCurrentWeatherForCity("DE", "Berlin"))
             .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
         mvc.perform(get("/current-weather/DE/Berlin")
@@ -94,7 +94,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void currentWeatherSuccess() throws Exception {
+    void testCurrentWeatherSuccess() throws Exception {
         Mockito.when(weatherService.getCurrentWeatherForCity("DE", "Berlin")).thenReturn(weatherReport);
         final String expectedResponse = objectMapper.writeValueAsString(weatherReport);
         mvc.perform(get("/current-weather/DE/Berlin")
@@ -104,7 +104,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void weatherForecastNotFound() throws Exception {
+    void testWeatherForecastNotFound() throws Exception {
         Mockito.when(
             weatherService.getWeatherForecastForCity(0, "DE", "NichtExistierendeStadt")
         ).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -114,7 +114,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void weatherForecastInternalServerError() throws Exception {
+    void testWeatherForecastInternalServerError() throws Exception {
         Mockito.when(weatherService.getWeatherForecastForCity(0, "DE", "Berlin"))
             .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
         mvc.perform(get("/weather-forecast/0/DE/Berlin")
@@ -123,7 +123,7 @@ public class WeatherControllerTest {
     }
 
     @Test
-    void weatherForecastSuccess() throws Exception {
+    void testWeatherForecastSuccess() throws Exception {
         Mockito.when(weatherService.getWeatherForecastForCity(0, "DE", "Berlin"))
             .thenReturn(weatherReports);
         final String expectedResponse = objectMapper.writeValueAsString(weatherReports);

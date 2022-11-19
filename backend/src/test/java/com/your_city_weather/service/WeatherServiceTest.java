@@ -95,7 +95,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    void getCurrentWeatherForCityError() {
+    void testGetCurrentWeatherForCityError() {
         Mockito.when(restTemplate.getForEntity("testCurrentWeatherUrl", WeatherReportResponse.class))
             .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
         ResponseStatusException responseStatusException = assertThrows(
@@ -106,7 +106,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    void getCurrentWeatherForCitySuccess() {
+    void testGetCurrentWeatherForCitySuccess() {
         ResponseEntity<WeatherReportResponse> responseEntity = new ResponseEntity<>(
             weatherReportResponse,
             new HttpHeaders(),
@@ -118,7 +118,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    void getWeatherForecastForCityError() {
+    void testGetWeatherForecastForCityError() {
         Mockito.when(restTemplate.getForEntity("testWeatherForecastUrl", WeatherForecastResponse.class))
             .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
         ResponseStatusException responseStatusException = assertThrows(
@@ -129,7 +129,7 @@ public class WeatherServiceTest {
     }
 
     @Test
-    void getWeatherForecastForCitySuccess() {
+    void testGetWeatherForecastForCitySuccess() {
         ResponseEntity<WeatherForecastResponse> responseEntity = new ResponseEntity<>(
             weatherForecastResponse,
             new HttpHeaders(),
