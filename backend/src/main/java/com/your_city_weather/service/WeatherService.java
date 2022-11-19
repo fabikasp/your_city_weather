@@ -5,7 +5,6 @@ import com.your_city_weather.api.WeatherForecastResponse;
 import com.your_city_weather.api.WeatherReportResponse;
 import com.your_city_weather.model.WeatherReport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -35,7 +34,7 @@ public class WeatherService {
 
             return mapWeatherReportResponse(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
-            throw new ResponseStatusException(e.getStatusCode());
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
         }
     }
 
@@ -57,7 +56,7 @@ public class WeatherService {
 
             return weatherReports.toArray(new WeatherReport[0]);
         } catch (HttpClientErrorException e) {
-            throw new ResponseStatusException(e.getStatusCode());
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
         }
     }
 
