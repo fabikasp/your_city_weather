@@ -18,12 +18,12 @@ public class WeatherController {
         return weatherService.getCurrentWeatherForCity(countryCode, city);
     }
 
-    @GetMapping("/weather-forecast/{numberOfDay}/{countryCode}/{city}")
+    @GetMapping("/weather-forecast/{dayNumber}/{countryCode}/{city}")
     public WeatherReport[] weatherForecast(
-        @PathVariable("numberOfDay") Integer numberOfDay, /* 0 = today, 1 = tomorrow, ..., 5 = in 5 days */
+        @PathVariable("dayNumber") Integer dayNumber, /* 0 = today, 1 = tomorrow, ..., 5 = in 5 days */
         @PathVariable("countryCode") String countryCode,
         @PathVariable("city") String city
     ) {
-        return weatherService.getWeatherForecastForCity(numberOfDay, countryCode, city);
+        return weatherService.getWeatherForecastForCity(dayNumber, countryCode, city);
     }
 }

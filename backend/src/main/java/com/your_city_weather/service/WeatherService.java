@@ -29,15 +29,19 @@ public class WeatherService {
         return mapWeatherReportResponse(responseEntity.getBody());
     }
 
-    public WeatherReport[] getWeatherForecastForCity(Integer numberOfDay, String countryCode, String city) {
+    public WeatherReport[] getWeatherForecastForCity(Integer dayNumber, String countryCode, String city) {
         ResponseEntity<WeatherForecastResponse> responseEntity = restTemplate.getForEntity(
             weatherApi.buildWeatherForecastUrl(countryCode, city),
             WeatherForecastResponse.class
         );
         WeatherReportResponse[] weatherReportResponses = responseEntity.getBody().getList();
         WeatherReport[] weatherReportArray = new WeatherReport[weatherReportResponses.length];
+        int weatherReportArrayIndex = 0;
         for (int i = 0; i < weatherReportResponses.length; i++) {
-            weatherReportArray[i] = mapWeatherReportResponse(weatherReportResponses[i]);
+            WeatherReport weatherReport = mapWeatherReportResponse(weatherReportResponses[i]);
+            if (weatherReportBelongsToDayNumber(weatherReport, dayNumber)) {
+                weatherReportArray[weatherReportArrayIndex++] = weatherReport;
+            }
         }
 
         return weatherReportArray;
@@ -67,5 +71,9 @@ public class WeatherService {
             weatherReportResponse.getClouds().get("all"),
             weatherReportResponse.getDt()
         );
+    }
+
+    private Boolean weatherReportBelongsToDayNumber(WeatherReport weatherReport, Integer dayNumber) {
+        return true;
     }
 }
