@@ -1,15 +1,17 @@
 package com.your_city_weather.service;
 
 import com.your_city_weather.api.WeatherApi;
-import com.your_city_weather.api.CurrentWeatherResponse;
-import com.your_city_weather.api.FiveDayWeatherForecastResponse;
-import com.your_city_weather.model.CurrentWeather;
+import com.your_city_weather.api.WeatherForecastResponse;
+import com.your_city_weather.api.WeatherResponse;
+import com.your_city_weather.model.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.stream.Stream;
 
 @Service
 public class WeatherService {
@@ -20,43 +22,52 @@ public class WeatherService {
     @Autowired
     private WeatherApi weatherApi;
 
-    public CurrentWeather getCurrentWeatherByCityName(String city) {
-        ResponseEntity<CurrentWeatherResponse> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildCurrentWeatherUrl(city),
-            CurrentWeatherResponse.class
+    public Weather getCurrentWeatherForCity(String countryCode, String city) {
+        ResponseEntity<WeatherResponse> responseEntity = restTemplate.getForEntity(
+            weatherApi.buildCurrentWeatherUrl(countryCode, city),
+            WeatherResponse.class
         );
-        CurrentWeatherResponse currentWeatherResponse = responseEntity.getBody();
+
+        return mapWeatherResponse(responseEntity.getBody());
+    }
+
+    public Weather[] getWeatherForecastForCity(Integer numberOfDay, String countryCode, String city) {
+        ResponseEntity<WeatherForecastResponse> responseEntity = restTemplate.getForEntity(
+            weatherApi.buildFiveDayWeatherForecastUrl(countryCode, city),
+            WeatherForecastResponse.class
+        );
+        WeatherResponse[] weatherResponses = responseEntity.getBody().getList();
+        Weather[] weatherArray = new Weather[weatherResponses.length];
+        for (int i = 0; i < weatherResponses.length; i++) {
+            weatherArray[i] = mapWeatherResponse(weatherResponses[i]);
+        }
+
+        return weatherArray;
+    }
+
+    private Weather mapWeatherResponse(WeatherResponse weatherResponse) {
         LinkedHashMap<String, String> weatherData = null;
         try {
-            weatherData = currentWeatherResponse.getWeather()[0];
+            weatherData = weatherResponse.getWeather()[0];
         } catch (NullPointerException ignore) {
         }
-        LinkedHashMap<String, Double> rainData = currentWeatherResponse.getRain();
+        LinkedHashMap<String, Double> rainData = weatherResponse.getRain();
 
-        return new CurrentWeather(
+        return new Weather(
             weatherData != null ? weatherData.get("main") : null,
             weatherData != null ? weatherData.get("description") : null,
             weatherData != null ? weatherData.get("icon") : null,
-            currentWeatherResponse.getMain().get("temp"),
-            currentWeatherResponse.getMain().get("temp_min"),
-            currentWeatherResponse.getMain().get("temp_max"),
-            currentWeatherResponse.getMain().get("pressure"),
-            currentWeatherResponse.getMain().get("humidity"),
-            currentWeatherResponse.getVisibility(),
-            currentWeatherResponse.getWind().get("speed"),
+            weatherResponse.getMain().get("temp"),
+            weatherResponse.getMain().get("temp_min"),
+            weatherResponse.getMain().get("temp_max"),
+            weatherResponse.getMain().get("pressure"),
+            weatherResponse.getMain().get("humidity"),
+            weatherResponse.getVisibility(),
+            weatherResponse.getWind().get("speed"),
             rainData != null ? rainData.getOrDefault("1h", null) : null,
             rainData != null ? rainData.getOrDefault("3h", null) : null,
-            currentWeatherResponse.getClouds().get("all")
+            weatherResponse.getClouds().get("all"),
+            weatherResponse.getDt()
         );
-    }
-
-    public FiveDayWeatherForecastResponse getFiveDayWeatherForecastByCityName(String city) {
-        ResponseEntity<FiveDayWeatherForecastResponse> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildFiveDayWeatherForecastUrl(city),
-            FiveDayWeatherForecastResponse.class
-        );
-        FiveDayWeatherForecastResponse fiveDayWeatherForecastResponse = responseEntity.getBody();
-
-        return fiveDayWeatherForecastResponse;
     }
 }

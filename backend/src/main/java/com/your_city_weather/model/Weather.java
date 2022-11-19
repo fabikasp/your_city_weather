@@ -1,6 +1,6 @@
 package com.your_city_weather.model;
 
-public class CurrentWeather {
+public class Weather {
 
     private final String weatherName;
 
@@ -28,7 +28,9 @@ public class CurrentWeather {
 
     private final Double cloudiness;
 
-    public CurrentWeather(
+    private final Integer timestamp;
+
+    public Weather(
         String weatherName,
         String weatherDescription,
         String weatherIconCode,
@@ -41,7 +43,8 @@ public class CurrentWeather {
         Double windSpeed,
         Double rainVolume1Hour,
         Double rainVolume3Hours,
-        Double cloudiness
+        Double cloudiness,
+        Integer timestamp
     ) {
         this.weatherName = weatherName;
         this.weatherDescription = weatherDescription;
@@ -56,6 +59,7 @@ public class CurrentWeather {
         this.rainVolume1Hour = rainVolume1Hour;
         this.rainVolume3Hours = rainVolume3Hours;
         this.cloudiness = cloudiness;
+        this.timestamp = timestamp;
     }
 
     public String getWeatherName() {
@@ -108,5 +112,9 @@ public class CurrentWeather {
 
     public Double getCloudiness() {
         return cloudiness;
+    }
+
+    public Integer getTimestamp() {
+        return timestamp;
     }
 }

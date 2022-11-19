@@ -12,11 +12,11 @@ public class WeatherApi {
     @Value("${your_city_weather.openweather-apikey}")
     private String apiKey;
 
-    public String buildCurrentWeatherUrl(String city) {
-        return currentWeatherBaseUrl + "?q=" + city + "&appid=" + apiKey;
+    public String buildCurrentWeatherUrl(String countryCode, String city) {
+        return currentWeatherBaseUrl + "?q=" + city + "," + countryCode + "&appid=" + apiKey;
     }
 
-    public String buildFiveDayWeatherForecastUrl(String city) {
-        return fiveDayWeatherForecastBaseUrl + "?q=" + city + "&appid=" + apiKey;
+    public String buildFiveDayWeatherForecastUrl(String countryCode, String city) {
+        return fiveDayWeatherForecastBaseUrl + "?q=" + city + "," + countryCode + "&appid=" + apiKey;
     }
 }
