@@ -94,7 +94,7 @@ public class WeatherServiceTest {
             .thenReturn("testWeatherForecastUrl");
     }
 
-    @Test()
+    @Test
     void getCurrentWeatherForCityError() {
         Mockito.when(restTemplate.getForEntity("testCurrentWeatherUrl", WeatherReportResponse.class))
             .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
