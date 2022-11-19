@@ -14,7 +14,10 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping("/current-weather/{countryCode}/{city}")
-    public WeatherReport currentWeather(@PathVariable("countryCode") String countryCode, @PathVariable("city") String city) {
+    public WeatherReport currentWeather(
+        @PathVariable("countryCode") String countryCode,
+        @PathVariable("city") String city
+    ) {
         return weatherService.getCurrentWeatherForCity(countryCode, city);
     }
 

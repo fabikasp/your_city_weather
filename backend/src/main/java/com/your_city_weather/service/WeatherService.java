@@ -7,7 +7,9 @@ import com.your_city_weather.model.WeatherReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,29 +26,38 @@ public class WeatherService {
     private WeatherApi weatherApi;
 
     public WeatherReport getCurrentWeatherForCity(String countryCode, String city) {
-        ResponseEntity<WeatherReportResponse> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildCurrentWeatherUrl(countryCode, city),
-            WeatherReportResponse.class
-        );
+        try {
+            ResponseEntity<WeatherReportResponse> responseEntity = restTemplate.getForEntity(
+                weatherApi.buildCurrentWeatherUrl(countryCode, city),
+                WeatherReportResponse.class
+            );
 
-        return mapWeatherReportResponse(responseEntity.getBody());
+            return mapWeatherReportResponse(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
+        }
     }
 
     public WeatherReport[] getWeatherForecastForCity(Integer dayNumber, String countryCode, String city) {
-        ResponseEntity<WeatherForecastResponse> responseEntity = restTemplate.getForEntity(
-            weatherApi.buildWeatherForecastUrl(countryCode, city),
-            WeatherForecastResponse.class
-        );
-        WeatherReportResponse[] weatherReportResponses = responseEntity.getBody().getList();
-        ArrayList<WeatherReport> weatherReports = new ArrayList<>();
-        for (int i = 0; i < weatherReportResponses.length; i++) {
-            WeatherReport weatherReport = mapWeatherReportResponse(weatherReportResponses[i]);
-            if (weatherReportBelongsToDayNumber(weatherReport, dayNumber)) {
-                weatherReports.add(weatherReport);
-            }
-        }
+        try {
+            ResponseEntity<WeatherForecastResponse> responseEntity = restTemplate.getForEntity(
+                weatherApi.buildWeatherForecastUrl(countryCode, city),
+                WeatherForecastResponse.class
+            );
 
-        return weatherReports.toArray(new WeatherReport[0]);
+            WeatherReportResponse[] weatherReportResponses = responseEntity.getBody().getList();
+            ArrayList<WeatherReport> weatherReports = new ArrayList<>();
+            for (WeatherReportResponse weatherReportResponse : weatherReportResponses) {
+                WeatherReport weatherReport = mapWeatherReportResponse(weatherReportResponse);
+                if (weatherReportBelongsToDayNumber(weatherReport, dayNumber)) {
+                    weatherReports.add(weatherReport);
+                }
+            }
+
+            return weatherReports.toArray(new WeatherReport[0]);
+        } catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
+        }
     }
 
     private WeatherReport mapWeatherReportResponse(WeatherReportResponse weatherReportResponse) {

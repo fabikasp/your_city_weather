@@ -13,10 +13,12 @@ public class WeatherApi {
     private String apiKey;
 
     public String buildCurrentWeatherUrl(String countryCode, String city) {
-        return currentWeatherBaseUrl + "?q=" + city + "," + countryCode + "&appid=" + apiKey;
+        return currentWeatherBaseUrl
+            + "?q=" + city + "," + countryCode + "&units=metric" + "&appid=" + apiKey + "&lang=de";
     }
 
     public String buildWeatherForecastUrl(String countryCode, String city) {
-        return weatherForecastBaseUrl + "?q=" + city + "," + countryCode + "&appid=" + apiKey;
+        return weatherForecastBaseUrl
+            + "?q=" + city + "," + countryCode + "&units=metric" + "&appid=" + apiKey + "&lang=de";
     }
 }
