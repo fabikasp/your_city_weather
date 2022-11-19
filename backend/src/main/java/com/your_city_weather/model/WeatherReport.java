@@ -1,5 +1,7 @@
 package com.your_city_weather.model;
 
+import java.util.Date;
+
 public record WeatherReport(
     String weatherName,
     String weatherDescription,
@@ -14,6 +16,6 @@ public record WeatherReport(
     Double rainVolume1Hour,
     Double rainVolume3Hours,
     Double cloudiness,
-    Integer timestamp
+    Date timestamp
 ) {
 }

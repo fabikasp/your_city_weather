@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 @Service
@@ -35,16 +38,15 @@ public class WeatherService {
             WeatherForecastResponse.class
         );
         WeatherReportResponse[] weatherReportResponses = responseEntity.getBody().getList();
-        WeatherReport[] weatherReportArray = new WeatherReport[weatherReportResponses.length];
-        int weatherReportArrayIndex = 0;
+        ArrayList<WeatherReport> weatherReports = new ArrayList<>();
         for (int i = 0; i < weatherReportResponses.length; i++) {
             WeatherReport weatherReport = mapWeatherReportResponse(weatherReportResponses[i]);
             if (weatherReportBelongsToDayNumber(weatherReport, dayNumber)) {
-                weatherReportArray[weatherReportArrayIndex++] = weatherReport;
+                weatherReports.add(weatherReport);
             }
         }
 
-        return weatherReportArray;
+        return weatherReports.toArray(new WeatherReport[0]);
     }
 
     private WeatherReport mapWeatherReportResponse(WeatherReportResponse weatherReportResponse) {
@@ -69,11 +71,18 @@ public class WeatherService {
             rainData != null ? rainData.getOrDefault("1h", null) : null,
             rainData != null ? rainData.getOrDefault("3h", null) : null,
             weatherReportResponse.getClouds().get("all"),
-            weatherReportResponse.getDt()
+            new Date((long) weatherReportResponse.getDt() * 1000)
         );
     }
 
     private Boolean weatherReportBelongsToDayNumber(WeatherReport weatherReport, Integer dayNumber) {
-        return true;
+        Calendar consideredDate = Calendar.getInstance();
+        consideredDate.setTime(new Date());
+        consideredDate.add(Calendar.DATE, dayNumber);
+
+        Calendar weatherReportDate = Calendar.getInstance();
+        weatherReportDate.setTime(weatherReport.timestamp());
+
+        return consideredDate.get(Calendar.DAY_OF_MONTH) == weatherReportDate.get(Calendar.DAY_OF_MONTH);
     }
 }
