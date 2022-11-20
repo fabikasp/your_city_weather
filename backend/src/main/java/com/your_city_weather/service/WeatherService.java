@@ -66,22 +66,23 @@ public class WeatherService {
             weatherData = weatherReportResponse.getWeather()[0];
         } catch (NullPointerException ignore) {
         }
+        LinkedHashMap<String, Double> windData = weatherReportResponse.getWind();
         LinkedHashMap<String, Double> rainData = weatherReportResponse.getRain();
 
         return new WeatherReport(
-            weatherData != null ? weatherData.get("main") : null,
-            weatherData != null ? weatherData.get("description") : null,
-            weatherData != null ? weatherData.get("icon") : null,
-            weatherReportResponse.getMain().get("temp"),
-            weatherReportResponse.getMain().get("temp_min"),
-            weatherReportResponse.getMain().get("temp_max"),
-            weatherReportResponse.getMain().get("pressure"),
-            weatherReportResponse.getMain().get("humidity"),
+            weatherData != null ? weatherData.getOrDefault("main", null) : null,
+            weatherData != null ? weatherData.getOrDefault("description", null) : null,
+            weatherData != null ? weatherData.getOrDefault("icon", null) : null,
+            weatherReportResponse.getMain().getOrDefault("temp", null),
+            weatherReportResponse.getMain().getOrDefault("temp_min", null),
+            weatherReportResponse.getMain().getOrDefault("temp_max", null),
+            weatherReportResponse.getMain().getOrDefault("pressure", null),
+            weatherReportResponse.getMain().getOrDefault("humidity", null),
             weatherReportResponse.getVisibility(),
-            weatherReportResponse.getWind().get("speed"),
+            windData != null ? windData.getOrDefault("speed", null) : null,
             rainData != null ? rainData.getOrDefault("1h", null) : null,
             rainData != null ? rainData.getOrDefault("3h", null) : null,
-            weatherReportResponse.getClouds().get("all"),
+            weatherReportResponse.getClouds().getOrDefault("all", null),
             new Date((long) weatherReportResponse.getDt() * 1000)
         );
     }
