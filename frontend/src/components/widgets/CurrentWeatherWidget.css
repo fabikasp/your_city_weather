@@ -1,0 +1,9 @@
+#current-weather-widget-container {
+    width: 50%;
+    height: 30%;
+    margin-top: 0.5%;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #FFFF;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
