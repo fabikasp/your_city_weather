@@ -1,12 +1,40 @@
-Benötigte Werkzeuge:
-- Java / Spring Boot - Backend
-    - fragt Breiten- und Längengrad für Städtenamen ab
-    - fragt mithilfe der Koordinaten Wetterdaten ab
-    - stellt APIs für Frontend zur Verfügung
-- TypeScript / React - Frontend
-    - fragt Backend APIs ab
-    - stellt Response Daten dar
+# Your City Weather
 
-Benötigte APIs:
-- Abfrage von Koordinaten: https://www.neutrinoapi.com/api/geocode-address/?gclid=Cj0KCQiA1NebBhDDARIsAANiDD01Rnx6QF5qIwcjg9mEhlxfsRAHKtR1lO6Xs6cW5jFh_Kt1PfSrm3EaArHFEALw_wcB
-- Abfrage von Wetterdaten: https://openweathermap.org/api
+Website zur Abfrage von stadtspezifischen Wetterdaten.
+
+## Ausführung
+
+### Backend
+
+- [BackendApplication](./backend/src/main/java/com/your_city_weather/BackendApplication.java) ausführen
+
+### Frontend
+
+1. `npm install` im geklonten Repository ausführen
+2. `npm start` im geklonten Repository ausführen
+3. [http://localhost:1234](http://localhost:1234) in einem Browser aufrufen
+
+## Verwendete Software
+
+<table>
+  <tr>
+    <td><a href="https://github.com/spring-projects/spring-boot">Spring Boot</a></td>
+    <td>von <a href="https://github.com/spring-projects">Spring Projects</a></td>
+    <td>lizenziert mit <a href="https://github.com/spring-projects/spring-boot/blob/main/LICENSE.txt">Apache License 2.0</a>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/microsoft/TypeScript">TypeScript</a></td>
+    <td>von <a href="https://github.com/microsoft">Microsoft</a></td>
+    <td>lizenziert mit <a href="https://github.com/microsoft/TypeScript/blob/main/LICENSE.txt">Apache License 2.0</a>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/facebook/react">React</a></td>
+    <td>von <a href="https://github.com/facebook">Meta</a></td>
+    <td>lizenziert mit <a href="https://github.com/facebook/react/blob/main/LICENSE">MIT License</a>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/parcel-bundler/parcel">Parcel</a></td>
+    <td>von <a href="https://github.com/parcel-bundler">Parcel</a></td>
+    <td>lizenziert mit <a href="https://github.com/parcel-bundler/parcel/blob/v2/LICENSE">MIT License</a>
+  </tr>
+</table>
