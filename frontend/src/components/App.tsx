@@ -1,5 +1,6 @@
 import React from "react";
-import { CurrentWeatherWidget } from "./widgets/CurrentWeatherWidget";
+import { CitySelection } from "./city-selection/CitySelection";
+import { CurrentWeatherWidget } from "./current-weather/CurrentWeatherWidget";
 import "./App.css";
 
 export const App = () => {
