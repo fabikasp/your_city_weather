@@ -43,7 +43,7 @@ Website zur Abfrage von stadtspezifischen Wetterdaten.
     <td>lizenziert mit <a href="https://github.com/parcel-bundler/parcel/blob/v2/LICENSE">MIT License</a>
   </tr>
   <tr>
-    <td><a href="https://github.com/axios/axios#axios-api">Axios</a></td>
+    <td><a href="https://github.com/axios/axios#axios-api">axios</a></td>
     <td>von <a href="https://github.com/axios">axios</a></td>
     <td>lizenziert mit <a href="https://github.com/axios/axios/blob/v1.x/LICENSE">MIT License</a>
   </tr>
