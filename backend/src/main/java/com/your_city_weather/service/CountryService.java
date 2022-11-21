@@ -22,7 +22,7 @@ public class CountryService {
         return handleCountryRequest(CountryApi.allCountriesUrl);
     }
 
-    public Country[] getCountriesByCountryName(String countryName) {
+    public Country[] getCountriesByName(String countryName) {
         return handleCountryRequest(countryApi.buildCountriesByNameUrl(countryName));
     }
 

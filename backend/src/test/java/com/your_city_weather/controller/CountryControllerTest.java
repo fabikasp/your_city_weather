@@ -36,9 +36,7 @@ public class CountryControllerTest {
 
     @BeforeEach
     void setUp() {
-        countries = new Country[] {
-            new Country("Germany", "DEU")
-        };
+        countries = new Country[] { new Country("Germany", "DEU") };
     }
 
     @Test
@@ -62,7 +60,7 @@ public class CountryControllerTest {
 
     @Test
     void testCountriesByNameNotFound() throws Exception {
-        Mockito.when(countryService.getCountriesByCountryName("NichtExistierendesLand"))
+        Mockito.when(countryService.getCountriesByName("NichtExistierendesLand"))
             .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
         mvc.perform(get("/countries/NichtExistierendesLand")
             .contentType(MediaType.APPLICATION_JSON))
@@ -71,7 +69,7 @@ public class CountryControllerTest {
 
     @Test
     void testCountriesByNameInternalServerError() throws Exception {
-        Mockito.when(countryService.getCountriesByCountryName("Germany"))
+        Mockito.when(countryService.getCountriesByName("Germany"))
             .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
         mvc.perform(get("/countries/Germany")
             .contentType(MediaType.APPLICATION_JSON))
@@ -80,7 +78,7 @@ public class CountryControllerTest {
 
     @Test
     void testCountriesByNameSuccess() throws Exception {
-        Mockito.when(countryService.getCountriesByCountryName("Germany")).thenReturn(countries);
+        Mockito.when(countryService.getCountriesByName("Germany")).thenReturn(countries);
         final String expectedResponse = objectMapper.writeValueAsString(countries);
         mvc.perform(get("/countries/Germany")
             .contentType(MediaType.APPLICATION_JSON))

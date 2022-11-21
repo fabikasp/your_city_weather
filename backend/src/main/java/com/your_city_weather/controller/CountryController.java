@@ -19,6 +19,6 @@ public class CountryController {
             return countryService.getCountries();
         }
 
-        return countryService.getCountriesByCountryName(countryName);
+        return countryService.getCountriesByName(countryName);
     }
 }
