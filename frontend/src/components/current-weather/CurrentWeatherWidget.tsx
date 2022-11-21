@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { CurrentWeather, CURRENT_WEATHER_URL, WEATHER_ICON_URL } from "./types";
+import { CurrentWeather, CurrentWeatherWidgetProps, CURRENT_WEATHER_URL, WEATHER_ICON_URL } from "./types";
 import BeatLoader from "react-spinners/BeatLoader";
 import "./CurrentWeatherWidget.css";
 
-export const CurrentWeatherWidget = () => {
+export const CurrentWeatherWidget = ({ searchedCountryCode, searchedCity }: CurrentWeatherWidgetProps) => {
     const [currentWeather, setCurrentWeather] = useState<CurrentWeather|undefined>(undefined);
     const [weatherIconUrl, setWeatherIconUrl] = useState<string|undefined>(undefined);
 
     async function getCurrentWeather(): Promise<CurrentWeather|undefined> {
         try {
             const { data, status } = await Axios.get<CurrentWeather>(
-                CURRENT_WEATHER_URL.replace("{countryCode}", "DE").replace("{city}", "Berlin"),
+                CURRENT_WEATHER_URL.replace("{countryCode}", searchedCountryCode).replace("{city}", searchedCity),
                 { headers: { Accept: 'application/json' } }
             );
 
             if (status != 200) {
                 return undefined;
             }
-        
+            
             return data;
         } catch (e) {
             return undefined;
@@ -27,12 +27,13 @@ export const CurrentWeatherWidget = () => {
 
     useEffect(() => {
         getCurrentWeather().then((currentWeather) => {
+            setCurrentWeather(currentWeather);
+
             if (currentWeather) {
-                setCurrentWeather(currentWeather);
                 setWeatherIconUrl(WEATHER_ICON_URL.replace("{iconCode}", currentWeather.weatherIconCode));
             }
         });
-    }, []);
+    }, [searchedCity]);
 
     const widgetContainer = (
         <div id="current-weather-widget-container">
