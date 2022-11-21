@@ -4,7 +4,9 @@ import { CitySelectionProps } from "./types";
 import "./CitySelection.css";
 
 export const CitySelection = ({ searchedCountryCode, searchedCity, setSearchedCountryCode, setSearchedCity }: CitySelectionProps) => {
-    // TODO: Backend-API für Länder bauen
+    // TODO: Backend-API für Länder bauen (Endpunkte: getCountryNames, getCountryCodeByName)
+    // TODO: select mit API-Ergebnis füllen
+    // TODO: Bei selection CountryCode ermitteln und setzen (searchedCountryCode nicht benötigt)
 
     return (
         <div id="city-selection-container">

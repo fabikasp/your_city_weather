@@ -4,8 +4,6 @@ import { CurrentWeatherWidget } from "./current-weather/CurrentWeatherWidget";
 import "./App.css";
 
 export const App = () => {
-    // TODO: Länder und deren LänderCodes über API anfragen und über Dropdown zur Verfügung stellen
-
     const [searchedCountryCode, setSearchedCountryCode] = useState<string>("DE");
     const [searchedCity, setSearchedCity] = useState<string>("");
 
@@ -21,5 +19,5 @@ export const App = () => {
         </div>
     );
 
-    // TODO: Auflistung der Forecast Widgets
+    // TODO: Auflistung der Forecast Widgets (in Forecast Widget Container, der Selection der Tage zur Verfügung stellt)
 };
