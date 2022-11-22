@@ -9,10 +9,6 @@
     margin-right: 2%;
 }
 
-#city-selection-city-input:focus, #city-selection-country-dropdown:focus {
-    outline: none !important;
-}
-
 #city-selection-country-dropdown, #city-selection-city-input {
     width: 40%;
     text-align: center;
@@ -21,4 +17,8 @@
     background-color: #FFFF;
     border-color: #FFFF;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+#city-selection-country-dropdown:focus, #city-selection-city-input:focus {
+    outline: none !important;
 }
