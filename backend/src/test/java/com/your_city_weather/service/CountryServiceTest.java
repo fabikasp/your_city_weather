@@ -1,7 +1,6 @@
 package com.your_city_weather.service;
 
 import com.your_city_weather.api.*;
-import com.your_city_weather.model.Country;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,31 +34,33 @@ public class CountryServiceTest {
 
     private CountryResponse[] countryResponses;
 
-    private Country[] countries;
+    private String[] countryNames;
 
     @BeforeEach
     void setUp() {
-        LinkedHashMap<String, Object> nameMap = new LinkedHashMap<>();
-        nameMap.put("common", "Germany");
-        countryResponses = new CountryResponse[] { new CountryResponse(nameMap, "DEU") };
-        countries = new Country[] { new Country("Germany", "DEU") };
-        Mockito.when(countryApi.buildCountriesByNameUrl("Germany"))
+        LinkedHashMap<String, LinkedHashMap<String, String>> translationsMap = new LinkedHashMap<>();
+        LinkedHashMap<String, String> deuMap = new LinkedHashMap<>();
+        deuMap.put("common", "Deutschland");
+        translationsMap.put("deu", deuMap);
+        countryResponses = new CountryResponse[] { new CountryResponse(translationsMap, "DEU") };
+        countryNames = new String[] { "Deutschland" };
+        Mockito.when(countryApi.buildCountriesByNameUrl("Deutschland"))
             .thenReturn("testCountriesByNameUrl");
     }
 
     @Test
-    void testGetCountriesError() {
+    void testGetCountryNamesError() {
         Mockito.when(restTemplate.getForEntity(CountryApi.allCountriesUrl, CountryResponse[].class))
             .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
         ResponseStatusException responseStatusException = assertThrows(
             ResponseStatusException.class,
-            () -> countryService.getCountries()
+            () -> countryService.getCountryNames()
         );
         assertSame(responseStatusException.getStatus(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    void testGetCountriesSuccess() {
+    void testGetCountryNamesSuccess() {
         ResponseEntity<CountryResponse[]> responseEntity = new ResponseEntity<>(
             countryResponses,
             new HttpHeaders(),
@@ -67,22 +68,22 @@ public class CountryServiceTest {
         );
         Mockito.when(restTemplate.getForEntity(CountryApi.allCountriesUrl, CountryResponse[].class))
             .thenReturn(responseEntity);
-        assertThat(countryService.getCountries()).isEqualTo(countries);
+        assertThat(countryService.getCountryNames()).isEqualTo(countryNames);
     }
 
     @Test
-    void testGetCountriesByNameError() {
+    void testGetCountryCodeByNameError() {
         Mockito.when(restTemplate.getForEntity("testCountriesByNameUrl", CountryResponse[].class))
             .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
         ResponseStatusException responseStatusException = assertThrows(
             ResponseStatusException.class,
-            () -> countryService.getCountriesByName("Germany")
+            () -> countryService.getCountryCodeByName("Deutschland")
         );
         assertSame(responseStatusException.getStatus(), HttpStatus.NOT_FOUND);
     }
 
     @Test
-    void testGetCountriesByNameSuccess() {
+    void testGetCountryCodeByNameSuccess() {
         ResponseEntity<CountryResponse[]> responseEntity = new ResponseEntity<>(
             countryResponses,
             new HttpHeaders(),
@@ -90,6 +91,6 @@ public class CountryServiceTest {
         );
         Mockito.when(restTemplate.getForEntity("testCountriesByNameUrl", CountryResponse[].class))
             .thenReturn(responseEntity);
-        assertThat(countryService.getCountriesByName("Germany")).isEqualTo(countries);
+        assertThat(countryService.getCountryCodeByName("Deutschland")).isEqualTo("DEU");
     }
 }

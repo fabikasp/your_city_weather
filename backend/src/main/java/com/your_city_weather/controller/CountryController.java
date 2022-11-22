@@ -1,6 +1,5 @@
 package com.your_city_weather.controller;
 
-import com.your_city_weather.model.Country;
 import com.your_city_weather.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,13 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @GetMapping({ "/countries", "/countries/{countryName}" })
-    public Country[] countries(@PathVariable(required = false) String countryName) {
-        if (countryName == null) {
-            return countryService.getCountries();
-        }
+    @GetMapping( "/countryNames")
+    public String[] countryNames() {
+        return countryService.getCountryNames();
+    }
 
-        return countryService.getCountriesByName(countryName);
+    @GetMapping( "/countryCode/{countryName}")
+    public String countryCodeByName(@PathVariable String countryName) {
+        return countryService.getCountryCodeByName(countryName);
     }
 }
