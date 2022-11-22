@@ -32,14 +32,18 @@ export const CitySelection = ({ searchedCity, setSearchedCountryCode, setSearche
             );
 
             if (status != 200) {
-                setCurrentCountryName("Deutschland");
+                if (currentCountryName != "Deutschland") {
+                    setCurrentCountryName("Deutschland");
+                }
 
                 return "DE";
             }
             
             return data;
         } catch (e) {
-            setCurrentCountryName("Deutschland");
+            if (currentCountryName != "Deutschland") {
+                setCurrentCountryName("Deutschland");
+            }
 
             return "DE";
         }

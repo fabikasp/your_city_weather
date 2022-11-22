@@ -88,22 +88,14 @@
     }
 }
 
-@media only screen and (min-height: 750px) {
-    #current-weather-widget-container {
-        height: 35%;
-    }
-
-    #current-weather-spinner-container {
-        height: 35%;
+@media only screen and ((min-height: 750px) or (min-width: 750px)) {
+    #current-weather-widget-container, #current-weather-spinner-container {
+        height: 38%;
     }
 }
 
-@media only screen and (min-height: 950px) and (min-width: 950px) {
-    #current-weather-widget-container {
-        height: 20%;
-    }
-
-    #current-weather-spinner-container {
+@media only screen and (min-height: 750px) and (min-width: 1000px) {
+    #current-weather-widget-container, #current-weather-spinner-container {
         height: 20%;
     }
 }
