@@ -45,7 +45,7 @@ public class CountryService {
             );
             CountryResponse[] countryResponses = responseEntity.getBody();
 
-            return countryResponses[0].getCca3();
+            return countryResponses[0].getCca2();
         } catch (HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
         }

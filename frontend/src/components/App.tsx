@@ -4,13 +4,12 @@ import { CurrentWeatherWidget } from "./current-weather/CurrentWeatherWidget";
 import "./App.css";
 
 export const App = () => {
-    const [searchedCountryCode, setSearchedCountryCode] = useState<string>("DE");
+    const [searchedCountryCode, setSearchedCountryCode] = useState<string>("");
     const [searchedCity, setSearchedCity] = useState<string>("");
 
     return (
         <div id="app-container">
-            <CitySelection 
-                searchedCountryCode={searchedCountryCode} 
+            <CitySelection
                 searchedCity={searchedCity}
                 setSearchedCountryCode={setSearchedCountryCode}
                 setSearchedCity={setSearchedCity}

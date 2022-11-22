@@ -45,8 +45,8 @@ public class WeatherServiceTest {
 
     @BeforeEach
     void setUp() {
-        Integer weatherReportTimestamp = 1668872761;
-        Date weatherReportDate = new Date((long) weatherReportTimestamp * 1000);
+        long weatherReportTimestamp = System.currentTimeMillis() / 1000;
+        Date weatherReportDate = new Date(weatherReportTimestamp * 1000);
         LinkedHashMap<String, String> weatherMap = new LinkedHashMap<>();
         weatherMap.put("main", "Clear");
         weatherMap.put("description", "Klarer Himmel");

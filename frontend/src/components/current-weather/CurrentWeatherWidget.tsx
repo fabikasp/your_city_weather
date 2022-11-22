@@ -26,14 +26,14 @@ export const CurrentWeatherWidget = ({ searchedCountryCode, searchedCity }: Curr
     }
 
     useEffect(() => {
-        getCurrentWeather().then((currentWeather) => {
+        getCurrentWeather().then(currentWeather => {
             setCurrentWeather(currentWeather);
 
             if (currentWeather) {
                 setWeatherIconUrl(WEATHER_ICON_URL.replace("{iconCode}", currentWeather.weatherIconCode));
             }
         });
-    }, [searchedCity]);
+    }, [searchedCountryCode, searchedCity]);
 
     const widgetContainer = (
         <div id="current-weather-widget-container">

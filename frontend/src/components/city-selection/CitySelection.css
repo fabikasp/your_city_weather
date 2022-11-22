@@ -9,7 +9,7 @@
     margin-right: 2%;
 }
 
-#city-selection-city-input:focus {
+#city-selection-city-input:focus, #city-selection-country-dropdown:focus {
     outline: none !important;
 }
 

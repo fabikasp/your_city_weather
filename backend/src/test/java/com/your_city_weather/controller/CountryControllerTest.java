@@ -69,10 +69,10 @@ public class CountryControllerTest {
 
     @Test
     void testCountryCodeByNameSuccess() throws Exception {
-        Mockito.when(countryService.getCountryCodeByName("Germany")).thenReturn("DEU");
+        Mockito.when(countryService.getCountryCodeByName("Germany")).thenReturn("DE");
         mvc.perform(get("/countryCode/Germany")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().string("DEU"));
+            .andExpect(content().string("DE"));
     }
 }

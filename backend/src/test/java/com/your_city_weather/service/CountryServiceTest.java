@@ -42,7 +42,7 @@ public class CountryServiceTest {
         LinkedHashMap<String, String> deuMap = new LinkedHashMap<>();
         deuMap.put("common", "Deutschland");
         translationsMap.put("deu", deuMap);
-        countryResponses = new CountryResponse[] { new CountryResponse(translationsMap, "DEU") };
+        countryResponses = new CountryResponse[] { new CountryResponse(translationsMap, "DE") };
         countryNames = new String[] { "Deutschland" };
         Mockito.when(countryApi.buildCountriesByNameUrl("Deutschland"))
             .thenReturn("testCountriesByNameUrl");
@@ -91,6 +91,6 @@ public class CountryServiceTest {
         );
         Mockito.when(restTemplate.getForEntity("testCountriesByNameUrl", CountryResponse[].class))
             .thenReturn(responseEntity);
-        assertThat(countryService.getCountryCodeByName("Deutschland")).isEqualTo("DEU");
+        assertThat(countryService.getCountryCodeByName("Deutschland")).isEqualTo("DE");
     }
 }
