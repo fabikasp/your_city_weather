@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
-import { WeatherForecastContainerProps, WEATHER_FORECAST_URL } from "./types";
+import { DAYS_OF_WEEK, WeatherForecastContainerProps, WEATHER_FORECAST_URL } from "./types";
 import { Weather } from "../shared/types";
 import "./WeatherForecast.css";
 
 export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: WeatherForecastContainerProps) => {
-    const [weatherForecasts, setWeatherForecasts] = useState<{ [dayNumber: number]: Weather[]}>({});
+    const [currentWeatherForecast, setCurrentWeatherForecast] = useState<Weather[]|undefined>(undefined);
+    const [listedDays, setListedDays] = useState<string[]>([]);
+    const [currentDayNumber, setCurrentDayNumber] = useState(0);
 
     async function getWeatherForecastForDay(dayNumber: number): Promise<Weather[]|undefined> {
         try {
@@ -26,23 +28,39 @@ export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: 
     }
 
     useEffect(() => {
-        const today = new Date();
-        let requestedWeatherForecasts: { [dayNumber: number]: Weather[]} = {};
-        for (let i = 0; i < 6; i++) {
-            getWeatherForecastForDay(i).then(weatherForecast => {
-                if (weatherForecast) {
-                    requestedWeatherForecasts[i] = weatherForecast;
-                }
-            });
+        let days: string[] = ["Heute"];
+        const baseDate = new Date();
+        for (let i = 1; i <= 5; i++) {
+            let consideredDate = new Date(baseDate);
+            consideredDate.setDate(consideredDate.getDate() + i);
+            days.push(DAYS_OF_WEEK[consideredDate.getDay()]);
         }
-        setWeatherForecasts(requestedWeatherForecasts);
+        setListedDays(days);
+    }, []);
+
+    useEffect(() => {
+        getWeatherForecastForDay(0).then(weatherForecast => setCurrentWeatherForecast(weatherForecast));
     }, [searchedCountryCode, searchedCity]);
 
-    // TODO: Weather[] + Wochentagstring an Widgets übergeben
-    // TODO: const consideredDate = new Date(today); consideredDate.setDate(consideredDate.getDate() + i);
-    // TODO: Spinner anzeigen, wenn forecasts leer sind
-    // TODO: Die Wochentage anzeigen, die von API überliefert wurden (nicht statisch hinschreiben)
-    const widgetsContainer = <div>test</div>;
+    useEffect(() => {
+        getWeatherForecastForDay(currentDayNumber).then(weatherForecast => setCurrentWeatherForecast(weatherForecast));
+    }, [currentDayNumber]);
+
+    const widgetsContainer = (
+        <div id="weather-forecast-widgets-container">
+            <div id="weather-forecast-selection-bar">
+                { listedDays.map((listedDay, index) => {
+                    const className = "weather-forecast-selection-item" + (index == currentDayNumber ? " selected": "");
+
+                    return <div
+                        key={index} 
+                        className={className}
+                        onClick={() => setCurrentDayNumber(index)}
+                    >{listedDay}</div>
+                }) }
+            </div>
+        </div>
+    );
 
     const spinnerContainer = (
         <div id="weather-forecast-spinner-container">
@@ -50,5 +68,5 @@ export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: 
         </div>
     );
 
-    return spinnerContainer;
+    return currentWeatherForecast ? widgetsContainer : spinnerContainer;
 };
