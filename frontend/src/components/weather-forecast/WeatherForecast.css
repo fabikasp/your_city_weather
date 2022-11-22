@@ -1,0 +1,7 @@
+#weather-forecast-spinner-container {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

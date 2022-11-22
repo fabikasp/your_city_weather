@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { CurrentWeather, CurrentWeatherWidgetProps, CURRENT_WEATHER_URL, WEATHER_ICON_URL } from "./types";
+import { CurrentWeatherWidgetProps, CURRENT_WEATHER_URL, WEATHER_ICON_URL } from "./types";
+import { Weather } from "../shared/types";
 import BeatLoader from "react-spinners/BeatLoader";
 import "./CurrentWeatherWidget.css";
 
 export const CurrentWeatherWidget = ({ searchedCountryCode, searchedCity }: CurrentWeatherWidgetProps) => {
-    const [currentWeather, setCurrentWeather] = useState<CurrentWeather|undefined>(undefined);
+    const [currentWeather, setCurrentWeather] = useState<Weather|undefined>(undefined);
     const [weatherIconUrl, setWeatherIconUrl] = useState<string|undefined>(undefined);
 
-    async function getCurrentWeather(): Promise<CurrentWeather|undefined> {
+    async function getCurrentWeather(): Promise<Weather|undefined> {
         try {
-            const { data, status } = await Axios.get<CurrentWeather>(
+            const { data, status } = await Axios.get<Weather>(
                 CURRENT_WEATHER_URL.replace("{countryCode}", searchedCountryCode).replace("{city}", searchedCity),
                 { headers: { Accept: 'application/json' } }
             );
@@ -61,7 +62,7 @@ export const CurrentWeatherWidget = ({ searchedCountryCode, searchedCity }: Curr
 
     const spinnerContainer = (
         <div id="current-weather-spinner-container">
-            <BeatLoader id="current-weather-spinner" color="#FFFF" loading={true} size={20} />
+            <BeatLoader color="#FFFF" loading={true} size={20} />
         </div>
     );
 
