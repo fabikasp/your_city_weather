@@ -1,0 +1,26 @@
+#city-selection-container {
+    width: 100%;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+#city-selection-country-dropdown {
+    margin-right: 2%;
+}
+
+#city-selection-country-dropdown, #city-selection-city-input {
+    width: 49%;
+    text-align: center;
+    padding: 0.4%;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 90%;
+    font-weight: bold;
+}
+
+#city-selection-country-dropdown:focus, #city-selection-city-input:focus {
+    outline: none !important;
+}

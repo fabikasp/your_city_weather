@@ -1,0 +1,21 @@
+html, body, #root {
+    background: radial-gradient(circle, rgba(0,134,255,1) 0%, rgba(0,129,255,1) 32%, rgba(0,74,219,1) 100%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+* {
+    font-family: "Courier New";
+    color: #000000;
+}
+
+#app-container {
+    width: 90%;
+    height: 100%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -4,23 +4,23 @@ import java.util.LinkedHashMap;
 
 public class CountryResponse {
 
-    private LinkedHashMap<String, Object> name;
+    private LinkedHashMap<String, LinkedHashMap<String, String>> translations;
 
-    private String cca3;
+    private String cca2;
 
-    public CountryResponse(LinkedHashMap<String, Object> name, String cca3) {
-        this.name = name;
-        this.cca3 = cca3;
+    public CountryResponse(LinkedHashMap<String, LinkedHashMap<String, String>> translations, String cca2) {
+        this.translations = translations;
+        this.cca2 = cca2;
     }
 
     public CountryResponse() {
     }
 
-    public LinkedHashMap<String, Object> getName() {
-        return name;
+    public LinkedHashMap<String, LinkedHashMap<String, String>> getTranslations() {
+        return translations;
     }
 
-    public String getCca3() {
-        return cca3;
+    public String getCca2() {
+        return cca2;
     }
 }

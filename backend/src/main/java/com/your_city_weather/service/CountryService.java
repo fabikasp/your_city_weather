@@ -1,7 +1,7 @@
 package com.your_city_weather.service;
 
-import com.your_city_weather.api.*;
-import com.your_city_weather.model.Country;
+import com.your_city_weather.api.CountryApi;
+import com.your_city_weather.api.CountryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,37 +18,36 @@ public class CountryService {
     @Autowired
     private CountryApi countryApi;
 
-    public Country[] getCountries() {
-        return handleCountryRequest(CountryApi.allCountriesUrl);
-    }
-
-    public Country[] getCountriesByName(String countryName) {
-        return handleCountryRequest(countryApi.buildCountriesByNameUrl(countryName));
-    }
-
-    private Country[] handleCountryRequest(String requestUrl) {
+    public String[] getCountryNames() {
         try {
             ResponseEntity<CountryResponse[]> responseEntity = restTemplate.getForEntity(
-                requestUrl,
+                CountryApi.allCountriesUrl,
                 CountryResponse[].class
             );
 
             CountryResponse[] countryResponses = responseEntity.getBody();
-            Country[] countries = new Country[countryResponses.length];
+            String[] countryNames = new String[countryResponses.length];
             for (int i = 0; i < countryResponses.length; i++) {
-                countries[i] = mapCountryResponse(countryResponses[i]);
+                countryNames[i] = countryResponses[i].getTranslations().get("deu").get("common");
             }
 
-            return countries;
+            return countryNames;
         } catch (HttpClientErrorException e) {
             throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
         }
     }
 
-    private Country mapCountryResponse(CountryResponse countryResponse) {
-        return new Country(
-            (String) countryResponse.getName().getOrDefault("common", null),
-            countryResponse.getCca3()
-        );
+    public String getCountryCodeByName(String countryName) {
+        try {
+            ResponseEntity<CountryResponse[]> responseEntity = restTemplate.getForEntity(
+                countryApi.buildCountriesByNameUrl(countryName),
+                CountryResponse[].class
+            );
+            CountryResponse[] countryResponses = responseEntity.getBody();
+
+            return countryResponses[0].getCca2();
+        } catch (HttpClientErrorException e) {
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage(), e);
+        }
     }
 }

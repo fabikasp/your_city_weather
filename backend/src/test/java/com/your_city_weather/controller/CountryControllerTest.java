@@ -1,9 +1,7 @@
 package com.your_city_weather.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.your_city_weather.model.Country;
 import com.your_city_weather.service.CountryService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,57 +30,49 @@ public class CountryControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Country[] countries;
-
-    @BeforeEach
-    void setUp() {
-        countries = new Country[] { new Country("Germany", "DEU") };
-    }
-
     @Test
-    void testCountriesInternalServerError() throws Exception {
-        Mockito.when(countryService.getCountries())
+    void testCountryNamesInternalServerError() throws Exception {
+        Mockito.when(countryService.getCountryNames())
             .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
-        mvc.perform(get("/countries")
+        mvc.perform(get("/countryNames")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isInternalServerError());
     }
 
     @Test
-    void testCountriesSuccess() throws Exception {
-        Mockito.when(countryService.getCountries()).thenReturn(countries);
-        final String expectedResponse = objectMapper.writeValueAsString(countries);
-        mvc.perform(get("/countries")
+    void testCountryNamesSuccess() throws Exception {
+        String[] countryNames = new String[] { "Germany" };
+        Mockito.when(countryService.getCountryNames()).thenReturn(countryNames);
+        mvc.perform(get("/countryNames")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().json(expectedResponse));
+            .andExpect(content().json(objectMapper.writeValueAsString(countryNames)));
     }
 
     @Test
-    void testCountriesByNameNotFound() throws Exception {
-        Mockito.when(countryService.getCountriesByName("NichtExistierendesLand"))
+    void testCountryCodeByNameNotFound() throws Exception {
+        Mockito.when(countryService.getCountryCodeByName("NichtExistierendesLand"))
             .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-        mvc.perform(get("/countries/NichtExistierendesLand")
+        mvc.perform(get("/countryCode/NichtExistierendesLand")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
     }
 
     @Test
-    void testCountriesByNameInternalServerError() throws Exception {
-        Mockito.when(countryService.getCountriesByName("Germany"))
+    void testCountryCodeByNameInternalServerError() throws Exception {
+        Mockito.when(countryService.getCountryCodeByName("Germany"))
             .thenThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
-        mvc.perform(get("/countries/Germany")
+        mvc.perform(get("/countryCode/Germany")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isInternalServerError());
     }
 
     @Test
-    void testCountriesByNameSuccess() throws Exception {
-        Mockito.when(countryService.getCountriesByName("Germany")).thenReturn(countries);
-        final String expectedResponse = objectMapper.writeValueAsString(countries);
-        mvc.perform(get("/countries/Germany")
+    void testCountryCodeByNameSuccess() throws Exception {
+        Mockito.when(countryService.getCountryCodeByName("Germany")).thenReturn("DE");
+        mvc.perform(get("/countryCode/Germany")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().json(expectedResponse));
+            .andExpect(content().string("DE"));
     }
 }

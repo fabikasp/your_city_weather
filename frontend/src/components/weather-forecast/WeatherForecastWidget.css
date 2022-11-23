@@ -1,0 +1,46 @@
+#weather-forecast-widget {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background-color: #FFFF;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1em;
+    margin-bottom: 1%;
+}
+
+#weather-forecast-conclusion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 3%;
+}
+
+#weather-forecast-conclusion-container img {
+    width: 40%;
+    height: auto;
+}
+
+#weather-forecast-conclusion-container div {
+    font-weight: bold;
+    font-size: 100%;
+}
+
+#weather-forecast-info-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 80%;
+    padding-top: 1em;
+}
+
+.weather-forecast-upper-infos {
+    margin-bottom: 0.6em;
+}
+
+.weather-forecast-data {
+    font-weight: bold;
+}

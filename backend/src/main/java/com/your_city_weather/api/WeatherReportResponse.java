@@ -16,7 +16,7 @@ public class WeatherReportResponse {
 
     private LinkedHashMap<String, Double> clouds;
 
-    private Integer dt;
+    private long dt;
 
     public WeatherReportResponse(
         LinkedHashMap<String, String>[] weather,
@@ -24,7 +24,7 @@ public class WeatherReportResponse {
         Integer visibility, LinkedHashMap<String, Double> wind,
         LinkedHashMap<String, Double> rain,
         LinkedHashMap<String, Double> clouds,
-        Integer dt
+        long dt
     ) {
         this.weather = weather;
         this.main = main;
@@ -62,7 +62,7 @@ public class WeatherReportResponse {
         return clouds;
     }
 
-    public Integer getDt() {
+    public long getDt() {
         return dt;
     }
 }

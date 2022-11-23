@@ -83,7 +83,7 @@ public class WeatherService {
             rainData != null ? rainData.getOrDefault("1h", null) : null,
             rainData != null ? rainData.getOrDefault("3h", null) : null,
             weatherReportResponse.getClouds().getOrDefault("all", null),
-            new Date((long) weatherReportResponse.getDt() * 1000)
+            new Date(weatherReportResponse.getDt() * 1000)
         );
     }
 
