@@ -6,13 +6,16 @@ Website zur Abfrage von stadtspezifischen Wetterdaten.
 
 ### Backend
 
-- [BackendApplication](./backend/src/main/java/com/your_city_weather/BackendApplication.java) ausführen
+1. [private.properties.draft-Datei](./backend/src/main/resources/private.properties.draft) kopieren und apiKey setzen
+2. [BackendApplication](./backend/src/main/java/com/your_city_weather/BackendApplication.java) ausführen oder *.jar-Datei bauen und ausführen
 
 ### Frontend
 
 1. `npm install` im geklonten Repository ausführen
 2. `npm start` im geklonten Repository ausführen
 3. [http://localhost:1234](http://localhost:1234) in einem Browser aufrufen
+
+oder [index.html](./frontend/dist/index.html) aufrufen
 
 ## Verwendete Software
 
