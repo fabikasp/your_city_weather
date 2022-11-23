@@ -15,7 +15,9 @@ export const WeatherForecastWidget = ({ weatherForecast }: WeatherForecastWidget
                 <div>{weatherForecast.weatherDescription}</div>
             </div>
             <div id="weather-forecast-info-container">
-                <div className="weather-forecast-upper-infos">Zeitpunkt: <span className="weather-forecast-data">{hours}:{minutes} Uhr</span></div>
+                <div className="weather-forecast-upper-infos">
+                    <span id="weather-forecast-timestamp-data" className="weather-forecast-data">{hours}:{minutes} Uhr</span>
+                </div>
                 <div className="weather-forecast-upper-infos">Temperatur: <span className="weather-forecast-data">{weatherForecast.temperature} *C</span></div>
                 <div>Bewölkung: <span className="weather-forecast-data">{weatherForecast.cloudiness} %</span></div>
             </div>

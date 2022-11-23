@@ -44,3 +44,7 @@
 .weather-forecast-data {
     font-weight: bold;
 }
+
+#weather-forecast-timestamp-data {
+    font-size: 110%;
+}

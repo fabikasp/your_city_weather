@@ -40,6 +40,7 @@ export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: 
     }, []);
 
     useEffect(() => {
+        setCurrentDayNumber(0);
         getWeatherForecastForDay(0).then(weatherForecast => setCurrentWeatherForecast(weatherForecast));
     }, [searchedCountryCode, searchedCity]);
 
