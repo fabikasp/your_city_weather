@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { CurrentWeatherWidgetProps, CURRENT_WEATHER_URL, WEATHER_ICON_URL } from "./types";
-import { Weather } from "../shared/types";
+import { CurrentWeatherWidgetProps, CURRENT_WEATHER_URL } from "./types";
+import { Weather, WEATHER_ICON_URL } from "../shared/types";
 import BeatLoader from "react-spinners/BeatLoader";
 import "./CurrentWeatherWidget.css";
 

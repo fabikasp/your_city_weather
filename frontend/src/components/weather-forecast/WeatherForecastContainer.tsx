@@ -3,7 +3,8 @@ import Axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { DAYS_OF_WEEK, WeatherForecastContainerProps, WEATHER_FORECAST_URL } from "./types";
 import { Weather } from "../shared/types";
-import "./WeatherForecast.css";
+import { WeatherForecastWidget } from "./WeatherForecastWidget";
+import "./WeatherForecastContainer.css";
 
 export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: WeatherForecastContainerProps) => {
     const [currentWeatherForecast, setCurrentWeatherForecast] = useState<Weather[]|undefined>(undefined);
@@ -47,7 +48,7 @@ export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: 
     }, [currentDayNumber]);
 
     const widgetsContainer = (
-        <div id="weather-forecast-widgets-container">
+        <div id="weather-forecast-container">
             <div id="weather-forecast-selection-bar">
                 { listedDays.map((listedDay, index) => {
                     const className = "weather-forecast-selection-item" + (index == currentDayNumber ? " selected": "");
@@ -58,6 +59,9 @@ export const WeatherForecastContainer = ({ searchedCountryCode, searchedCity }: 
                         onClick={() => setCurrentDayNumber(index)}
                     >{listedDay}</div>
                 }) }
+            </div>
+            <div id="weather-forecast-widgets-container">
+                { currentWeatherForecast?.map((weatherForecast, index) => <WeatherForecastWidget key={index} weatherForecast={weatherForecast} />) }
             </div>
         </div>
     );
